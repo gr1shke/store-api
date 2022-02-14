@@ -1,0 +1,617 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Category": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parent_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"offers_count": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiError": {
+				"properties": {
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Category.active-or-name-or-parent_id_": {
+				"properties": {
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parent_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"CategoryCreationParams": {
+				"$ref": "#/components/schemas/Pick_Category.active-or-name-or-parent_id_"
+			},
+			"ApiSuccess": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Category.id-or-active-or-name-or-parent_id_": {
+				"properties": {
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parent_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"id"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"CategoryUpdateParams": {
+				"$ref": "#/components/schemas/Pick_Category.id-or-active-or-name-or-parent_id_"
+			},
+			"Offer": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"category_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"price",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OfferInCategory": {
+				"properties": {
+					"count": {
+						"type": "number",
+						"format": "double"
+					},
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/Offer"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"count",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Offer.active-or-name-or-price-or-description-or-category_id_": {
+				"properties": {
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"category_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"name",
+					"price",
+					"description"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"OfferCreationParams": {
+				"$ref": "#/components/schemas/Pick_Offer.active-or-name-or-price-or-description-or-category_id_"
+			},
+			"Pick_Offer.id-or-active-or-name-or-price-or-description-or-category_id_": {
+				"properties": {
+					"active": {
+						"type": "boolean"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"category_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"name",
+					"id",
+					"price",
+					"description"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"OfferUpdateParams": {
+				"$ref": "#/components/schemas/Pick_Offer.id-or-active-or-name-or-price-or-description-or-category_id_"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "",
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/api/v1/categories": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/Category"
+											},
+											"type": "array"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								},
+								"examples": {
+									"Example 1": {
+										"value": [
+											{
+												"id": 15,
+												"name": "Сетевое оборудование",
+												"parent_id": 3,
+												"offers_count": 4
+											},
+											{
+												"id": 16,
+												"name": "Маршрутизаторы",
+												"parent_id": 15,
+												"offers_count": 2
+											},
+											{
+												"id": 17,
+												"name": "Сетевые хранилища",
+												"parent_id": 15,
+												"offers_count": 2
+											}
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/Category"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"id": 15,
+											"active": false,
+											"name": "Сетевое оборудование",
+											"parent_id": 3
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CategoryCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ApiSuccess"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CategoryUpdateParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/categories/{id}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ApiSuccess"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {}
+					}
+				]
+			}
+		},
+		"/api/v1/offers": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/Offer"
+											},
+											"type": "array"
+										},
+										{
+											"$ref": "#/components/schemas/OfferInCategory"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								},
+								"examples": {
+									"Example 1": {
+										"value": [
+											{
+												"id": 20,
+												"name": "Сетевое хранилище WD",
+												"price": 4000,
+												"description": "Описание сетевого хранилища",
+												"category_id": 15
+											},
+											{
+												"id": 21,
+												"name": "Маршрутизатор D-Link",
+												"price": 2000,
+												"description": "Описание маршрутизатора",
+												"category_id": 16
+											}
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Offer"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "categoryId",
+						"required": false,
+						"schema": {
+							"default": null
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/Offer"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"id": 20,
+											"name": "Сетевое хранилище WD",
+											"price": 4000,
+											"description": "Описание сетевого хранилища",
+											"category_id": 15
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Offer"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OfferCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ApiSuccess"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Offer"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OfferUpdateParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/offers/{id}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ApiSuccess"
+										},
+										{
+											"$ref": "#/components/schemas/ApiError"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Offer"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
